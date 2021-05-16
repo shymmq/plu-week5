@@ -1,3 +1,4 @@
+from pydantic import PositiveInt
 from sqlalchemy import desc
 from sqlalchemy.orm import Session, joinedload, load_only
 
@@ -27,3 +28,12 @@ def insert_supplier(db: Session, supplier: schemas.SupplierCreate):
     db.add(db_supplier)
     db.commit()
     return db_supplier
+
+
+def update_supplier(db: Session, supplier_id: PositiveInt, new_supp: schemas.SupplierCreate):
+    supp = db.get(models.Supplier, supplier_id)
+    for (k, v) in new_supp.dict().items():
+        print(f"updating {k} {v}")
+        setattr(supp, k, v)
+    db.commit()
+    return supp
