@@ -33,8 +33,8 @@ def insert_supplier(db: Session, supplier: schemas.SupplierCreate):
 def update_supplier(db: Session, supplier_id: PositiveInt, new_supp: schemas.SupplierUpdate):
     supp = db.get(models.Supplier, supplier_id)
     for (k, v) in new_supp.dict().items():
-        print(f"updating {k} {v}")
-        setattr(supp, k, v)
+        if v != "not sepcified":
+            setattr(supp, k, v)
     db.commit()
     return supp
 

@@ -44,7 +44,7 @@ class SupplierCreate(BaseModel):
 
 
 class SupplierUpdate(BaseModel):
-    CompanyName: Optional[constr(max_length=40)]
+    CompanyName: Optional[constr(max_length=40)] = "not sepcified"
     ContactName: Optional[constr(max_length=30)]
     ContactTitle: Optional[constr(max_length=30)]
     Address: Optional[constr(max_length=60)]
