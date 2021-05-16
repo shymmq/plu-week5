@@ -43,7 +43,7 @@ async def update_supplier(supplier_id, new_props: schemas.SupplierUpdate, db: Se
 async def delete_supplier(supplier_id, db: Session = Depends(get_db)):
     db_supplier = crud.get_supplier(db, supplier_id)
     if db_supplier is None:
-        raise HTTPException(status_code=401, detail="Supplier not found")
+        raise HTTPException(status_code=404, detail="Supplier not found")
     crud.delete_supplier(db, supplier_id)
 
 
