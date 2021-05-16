@@ -26,7 +26,7 @@ async def get_suppliers(db: Session = Depends(get_db)):
     return db_suppliers
 
 
-@router.post("/suppliers", response_model=schemas.SupplierFull)
+@router.post("/suppliers", status_code=201, response_model=schemas.SupplierFull)
 async def insert_supplier(supplier: schemas.SupplierCreate, db: Session = Depends(get_db)):
     return crud.insert_supplier(db, supplier)
 
