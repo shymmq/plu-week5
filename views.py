@@ -39,6 +39,14 @@ async def update_supplier(supplier_id, new_props: schemas.SupplierUpdate, db: Se
     return crud.update_supplier(db, supplier_id, new_props)
 
 
+@router.delete("/suppliers/{supplier_id}", status_code=204)
+async def delete_supplier(supplier_id, db: Session = Depends(get_db)):
+    db_supplier = crud.get_supplier(db, supplier_id)
+    if db_supplier is None:
+        raise HTTPException(status_code=401, detail="Supplier not found")
+    crud.delete_supplier(db, supplier_id)
+
+
 @router.get("/suppliers/{supplier_id}/products")
 async def get_products_for_supplier(supplier_id: PositiveInt, db: Session = Depends(get_db)):
     db_supplier = crud.get_supplier(db, supplier_id)
