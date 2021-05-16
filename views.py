@@ -11,7 +11,7 @@ from db import get_db
 router = APIRouter()
 
 
-@router.get("/suppliers/{supplier_id}", response_model=schemas.Supplier)
+@router.get("/suppliers/{supplier_id}", response_model=schemas.SupplierFull)
 async def get_supplier(supplier_id: PositiveInt, db: Session = Depends(get_db)):
     db_supplier = crud.get_supplier(db, supplier_id)
     if db_supplier is None:
@@ -19,6 +19,8 @@ async def get_supplier(supplier_id: PositiveInt, db: Session = Depends(get_db)):
     return db_supplier
 
 
-@router.get("/suppliers", response_model=List[schemas.Supplier])
+@router.get("/suppliers", response_model=List[schemas.SupplierShort])
 async def get_suppliers(db: Session = Depends(get_db)):
-    return crud.get_suppliers(db)
+    db_suppliers = crud.get_suppliers(db)
+
+    return db_suppliers

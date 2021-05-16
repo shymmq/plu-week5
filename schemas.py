@@ -3,7 +3,7 @@ from typing import List, Optional
 from pydantic import BaseModel, constr, PositiveInt
 
 
-class Supplier(BaseModel):
+class SupplierFull(BaseModel):
     SupplierID: PositiveInt
     CompanyName: constr(max_length=40)
     ContactName: constr(max_length=30)
@@ -16,6 +16,14 @@ class Supplier(BaseModel):
     Phone: constr(max_length=24)
     Fax: Optional[constr(max_length=24)]
     HomePage: Optional[constr()]
+
+    class Config:
+        orm_mode = True
+
+
+class SupplierShort(BaseModel):
+    SupplierID: PositiveInt
+    CompanyName: constr(max_length=40)
 
     class Config:
         orm_mode = True
