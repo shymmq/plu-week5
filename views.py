@@ -31,7 +31,7 @@ async def insert_supplier(supplier: schemas.SupplierCreate, db: Session = Depend
     return crud.insert_supplier(db, supplier)
 
 
-@router.put("/suppliers/{supplier_id}", status_code=200, response_model=schemas.SupplierFull)
+@router.put("/suppliers/{supplier_id}", status_code=204, response_model=schemas.SupplierFull)
 async def update_supplier(supplier_id, new_props: schemas.SupplierUpdate, db: Session = Depends(get_db)):
     db_supplier = crud.get_supplier(db, supplier_id)
     if db_supplier is None:
