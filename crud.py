@@ -2,6 +2,7 @@ from sqlalchemy import desc
 from sqlalchemy.orm import Session, joinedload, load_only
 
 import models
+import schemas
 
 
 def get_suppliers(db: Session):
@@ -18,3 +19,11 @@ def get_products_for_supplier(db: Session, supplier_id: int):
                  joinedload(models.Product.Category).options(load_only("CategoryID", "CategoryName"))) \
         .filter(models.Product.SupplierID == supplier_id) \
         .order_by(models.Product.ProductID.desc()).all()
+
+
+def insert_supplier(db: Session, supplier: schemas.SupplierCreate):
+    supplier_id = db.query(models.Supplier).count() + 1
+    db_supplier = models.Supplier(SupplierID=supplier_id, **supplier.dict())
+    db.add(db_supplier)
+    db.commit()
+    return db_supplier
